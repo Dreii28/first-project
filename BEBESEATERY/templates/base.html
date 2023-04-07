@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+        .remove-btn{
+            color:red;
+        }
+        #startMatch{
+            margin-top:15px;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        #batusai{
+            display:flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <input id="heroName" placeholder="Hero name" type="text">
+            </div>
+            <div class="col-3">
+                <input id="heroType" placeholder="Hero Type" type="text">
+            </div>
+            <div class="col-3">
+
+                <select class="form-control" id="heroTeam">
+                    <option value="Sentinel">Sentinel</option>
+                    <option value="Scourge">Scourge</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <button id="submitBtn" class="btn btn-primary mb-2">Add hero</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="background-color:yellow;">
+                <h1>
+                    {{ team1 }}
+                </h1>
+                <ul id="sentinelHeroes">
+                    {% for hero in default1 %}
+                        <li>
+                            {{ hero }}
+                            <button class='remove-btn'>remove</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-6" style="background-color:green;">
+                <h1>
+                    {{ team2 }}
+                </h1>
+                <ul id="scourgeHeroes">
+                    {% for hero in default2 %}
+                        <li>
+                            {{ hero }}
+                            <button class='remove-btn'>remove</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="bat" class="col-12">
+                <button id="startMatch" class="btn btn-primary mb-2">start Match</button>
+            </div>
+        
+        </div>
+    </div>
+
+<script>
+    console.log("START NG SCRIPT")
+    $(".remove-btn").on('click', function(){
+        $(this).parent('li').remove()
+    })
+
+    $("#submitBtn").on('click', function(){
+        heroName = $("#heroName").val()
+        heroType = $("#heroType").val()
+        heroTeam = $("#heroTeam option:selected").text()
+        
+        console.log("heroName", heroName)
+        console.log("heroType", heroType)
+        console.log("heroTeam", heroTeam)
+        if(heroName){
+            Item = "<li>"+ heroName + "(" + heroType + ")" + "<button class='remove-btn'>remove</button></li>"
+            if(heroTeam === "Sentinel"){
+                $("#sentinelHeroes").append(Item)
+            }else if(heroTeam === "Scourge"){
+                $("#scourgeHeroes").append(Item)
+            }
+
+            $("#heroName").val("")   
+            $("#heroType").val("")
+        }
+            
+        
+
+        $(".remove-btn").on('click', function(){
+            $(this).parent('li').remove()
+        })
+    })
+
+    $('#startMatch').on('click', function(){
+        console.log("bottonclick")
+        sentinelHeroes = $("#sentinelHeroes").find('li').length
+        scourgeHeroes = $('#scourgeHeroes').find('li').length
+
+        console.log("sentinel hero count", sentinelHeroes)
+        console.log("scourge hero count ",scourgeHeroes )
+
+        if(sentinelHeroes === 6 && scourgeHeroes === 7){
+            alert('start match')
+        }else{
+            alert('condition not met')
+        }
+
+    })
+
+
+   
+</script>
+</body>
+
+</html>
